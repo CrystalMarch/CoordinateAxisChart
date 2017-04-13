@@ -1,5 +1,6 @@
 # CoordinateAxisChart
 实现了在坐标系中画点，一次函数，幂函数，指数函数，对数函数，三角函数等
+Implemented draw poiont graph.
 
              yAxis = xAxis - 3 一次函数
              yAxis = pow(xAxis, 2)  幂函数
