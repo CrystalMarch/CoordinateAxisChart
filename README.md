@@ -8,5 +8,5 @@
 * logarithmic function, i should be greater than zero(对数函数, 此时应该设置i的值大于0): yAxis = log (xAxis) 
 * circular function(三角函数), like sin, cos, tan: yAxis = sin (xAxis) 
 
-![alt text](https://github.com/CrystalMarch/CoordinateAxisChart/blob/master/Simulator%20Screen%20Shot%202017年4月13日%2017.29.33.png)
-![alt text](https://github.com/CrystalMarch/CoordinateAxisChart/blob/master/Simulator%20Screen%20Shot%202017年4月13日%2017.30.07.png)
+![alt text](https://github.com/CrystalMarch/CoordinateAxisChart/blob/master/chart.png)
+![alt text](https://github.com/CrystalMarch/CoordinateAxisChart/blob/master/charttwo.png)
