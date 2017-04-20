@@ -10,19 +10,72 @@ import UIKit
 enum ChartType {
     case point
     case line
-    
 }
 class ChartView: UIView {
-        let xAxis = UIView()
-        let yAxis = UIView()
-        var width :CGFloat!
-        var height :CGFloat!
-    var lineArray :[CGPoint]!
-    let backgroundView = UIView()
-    let xMargin = CGFloat(14)
-    let yMargin = CGFloat(14)
-    
-    
+    fileprivate let xAxis = UIView()
+    fileprivate let yAxis = UIView()
+    fileprivate var width :CGFloat!
+    fileprivate var height :CGFloat!
+    fileprivate var point = Array<[CGPoint]>()
+    fileprivate var chartType = Array<ChartType>()
+    fileprivate var lineColor = Array<UIColor>()
+    fileprivate var layerArray = Array<CALayer>()
+    fileprivate let backgroundView = UIView()
+    fileprivate let yArrowLayer = CAShapeLayer()
+    fileprivate let xArrowLayer = CAShapeLayer()
+    fileprivate var xMargin = CGFloat(14)
+    fileprivate var yMargin = CGFloat(14)
+    fileprivate var _xMarginMaxValue:Int = 5
+    var xMarginMaxValue:Int {
+        get{
+            return _xMarginMaxValue
+        }
+        set{
+          _xMarginMaxValue = newValue
+            updateLayerFrames()
+            
+        }
+    }
+   fileprivate var _yMarginMaxValue:Int = 5
+    var yMarginMaxValue:Int {
+        get{
+            return _yMarginMaxValue
+        }
+        set{
+            _yMarginMaxValue = newValue
+            updateLayerFrames()
+        }
+    }
+   fileprivate var _xMarginMinValue:Int = -5
+    var xMarginMinValue:Int {
+        get{
+           return _xMarginMinValue
+        }
+        set{
+            _xMarginMinValue = newValue
+            updateLayerFrames()
+        }
+    }
+   fileprivate var _yMarginMinValue:Int = -5
+    var yMarginMinValue:Int {
+        get{
+            return _yMarginMinValue
+        }
+        set{
+            _yMarginMinValue = newValue
+            updateLayerFrames()
+        }
+    }
+    fileprivate var _axisColor :UIColor = UIColor.black
+    var axisColor:UIColor{
+        get{
+            return _axisColor
+        }
+        set{
+            _axisColor = newValue
+            updateLayerFrames()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,123 +87,151 @@ class ChartView: UIView {
             updateLayerFrames()
         } 
     }
-    func updateLayerFrames() {
+   fileprivate func updateLayerFrames() {
         self.layer.masksToBounds = true
+        
+        xMargin = self.frame.width/CGFloat(2+xMarginMaxValue-xMarginMinValue)
+        yMargin = self.frame.width/CGFloat(2+yMarginMaxValue-yMarginMinValue)
         width = self.frame.width - 2*xMargin
         height = self.frame.height - 2*yMargin
         if width > 0 {
-           
+            backgroundView.removeFromSuperview()
+            for subview in backgroundView.subviews {
+                subview.removeFromSuperview()
+            }
+            backgroundView.layer.removeFromSuperlayer()
             backgroundView.frame = self.bounds
             self.addSubview(backgroundView)
             self.addAxis()
             self.addArrowForAxis()
+            self.reSetPointData()
         }
        
     }
-    
-    func addAxis() {
-        xAxis.frame = CGRect(x:0,y:height/2+yMargin,width:self.frame.width,height:0.5)
-        xAxis.backgroundColor = UIColor.black
-        yAxis.frame = CGRect(x:width/2+xMargin,y:0,width:0.5,height:self.frame.height)
-        yAxis.backgroundColor = UIColor.black
+   fileprivate func addAxis() {
+        xAxis.frame = CGRect(x:0,y:CGFloat(yMarginMaxValue + 1)*yMargin,width:self.frame.width,height:0.5)
+        yAxis.frame = CGRect(x:CGFloat(1-xMarginMinValue)*xMargin,y:0,width:0.5,height:self.frame.height)
+        xAxis.backgroundColor = _axisColor
+        yAxis.backgroundColor = _axisColor
         backgroundView.addSubview(xAxis)
         backgroundView.addSubview(yAxis)
-        for i in -5...5 {
+        for xIndex in xMarginMinValue...xMarginMaxValue{
             let xLine = UIView()
-            xLine.backgroundColor = UIColor.black
-            xLine.frame = CGRect(x:CGFloat(i)*width/10 + width/2 + xMargin,y:height/2-height/40+yMargin,width:0.5,height:height/20)
+            xLine.backgroundColor = _axisColor
+            xLine.frame = CGRect(x:CGFloat(xIndex-xMarginMinValue+1)*xMargin,y:(CGFloat(yMarginMaxValue + 1)-0.25)*yMargin,width:0.5,height:height/20)
             backgroundView.addSubview(xLine)
-            let yLine = UIView()
-            yLine.backgroundColor = UIColor.black
-            yLine.frame = CGRect(x:width/2-width/40+xMargin,y:height/2 - CGFloat(i)*height/10 + yMargin,width:width/20,height:0.5)
-            backgroundView.addSubview(yLine)
             let xLabel = UILabel()
+            xLabel.textColor = _axisColor
             xLabel.font = UIFont.systemFont(ofSize: 10)
-            xLabel.text = "\(i)"
-            if i != 0 {
+            xLabel.text = "\(xIndex)"
+            if xIndex != 0 {
                 xLabel.textAlignment = .center
             }else{
                 xLabel.textAlignment = .right
             }
-            xLabel.frame = CGRect(x:CGFloat(i)*width/10 + width/2 - width/20 + xMargin,y:height/2+height/40+yMargin,width:width/10,height:height/20)
+            xLabel.frame = CGRect(x:(CGFloat(xIndex-xMarginMinValue+1)-0.5)*xMargin,y:(CGFloat(yMarginMaxValue + 1)+0.25)*yMargin,width:xMargin,height:yMargin/2)
             backgroundView.addSubview(xLabel)
+        }
+        
+        for yIndex in yMarginMinValue...yMarginMaxValue {
+            
+            let yLine = UIView()
+            yLine.backgroundColor = _axisColor
+            yLine.frame = CGRect(x:(CGFloat(1-xMarginMinValue)-0.25)*xMargin,y:CGFloat(yMarginMaxValue-yIndex+1)*yMargin,width:xMargin/2,height:0.5)
+            backgroundView.addSubview(yLine)
+            
             let yLabel = UILabel()
-            yLabel.frame = CGRect(x:width/2+width/40+xMargin,y:height/2 - CGFloat(i)*height/10 - height/20 + yMargin,width:width/10,height:height/10)
+            yLabel.textColor = _axisColor
+            yLabel.frame = CGRect(x:(CGFloat(1-xMarginMinValue)+0.25)*xMargin,y:(CGFloat(yMarginMaxValue-yIndex+1)-0.5)*yMargin,width:xMargin,height:yMargin)
             yLabel.font = UIFont.systemFont(ofSize: 10)
             yLabel.textAlignment = .center
-            if i != 0  {
-                yLabel.text = "\(i)"
+            if yIndex != 0  {
+                yLabel.text = "\(yIndex)"
             }
             backgroundView.addSubview(yLabel)
         }
-       
     }
-    func addArrowForAxis() {
+   fileprivate func addArrowForAxis() {
+        xArrowLayer.removeFromSuperlayer()
+        yArrowLayer.removeFromSuperlayer()
         let path = UIBezierPath()
-        let yLayer = CAShapeLayer()
-        let xLayer = CAShapeLayer()
-        
-        path.move(to: CGPoint(x:backgroundView.frame.size.width/2-5,y:5))
-        path.addLine(to: CGPoint(x:backgroundView.frame.size.width/2,y:0))
-        path.addLine(to: CGPoint(x:backgroundView.frame.size.width/2+5,y:5))
-        yLayer.path = path.cgPath
-        yLayer.fillColor = UIColor.clear.cgColor
-        yLayer.strokeColor = UIColor.black.cgColor
-        yLayer.lineWidth = 0.5
-        backgroundView.layer.addSublayer(yLayer)
-        path.move(to: CGPoint(x:backgroundView.frame.size.width-5,y:backgroundView.frame.size.height/2-5))
-        path.addLine(to: CGPoint(x:backgroundView.frame.size.width,y:backgroundView.frame.size.height/2))
-        path.addLine(to: CGPoint(x:backgroundView.frame.size.width-5,y:backgroundView.frame.size.height/2+5))
-        xLayer.path = path.cgPath
-        xLayer.fillColor = UIColor.clear.cgColor
-        xLayer.strokeColor = UIColor.black.cgColor
-        xLayer.lineWidth = 0.5
-        backgroundView.layer.addSublayer(xLayer)
+        path.move(to: CGPoint(x:CGFloat(1-xMarginMinValue)*xMargin-5,y:5))
+        path.addLine(to: CGPoint(x:CGFloat(1-xMarginMinValue)*xMargin,y:0))
+        path.addLine(to: CGPoint(x:CGFloat(1-xMarginMinValue)*xMargin+5,y:5))
+        yArrowLayer.path = path.cgPath
+        yArrowLayer.fillColor = UIColor.clear.cgColor
+        yArrowLayer.strokeColor = _axisColor.cgColor
+        yArrowLayer.lineWidth = 0.5
+        backgroundView.layer.addSublayer(yArrowLayer)
+        path.move(to: CGPoint(x:backgroundView.frame.size.width-5,y:CGFloat(yMarginMaxValue + 1)*yMargin-5))
+        path.addLine(to: CGPoint(x:backgroundView.frame.size.width,y:CGFloat(yMarginMaxValue + 1)*yMargin))
+        path.addLine(to: CGPoint(x:backgroundView.frame.size.width-5,y:CGFloat(yMarginMaxValue + 1)*yMargin+5))
+        xArrowLayer.path = path.cgPath
+        xArrowLayer.fillColor = UIColor.clear.cgColor
+        xArrowLayer.strokeColor = _axisColor.cgColor
+        xArrowLayer.lineWidth = 0.5
+        backgroundView.layer.addSublayer(xArrowLayer)
         
     }
-    func setPointData(pointData:[CGPoint],chartType:ChartType) {
-        lineArray = pointData
+    func setPointData(pointData:[CGPoint],chartType:ChartType,lineOrPointColor:UIColor) {
+        point.append(pointData)
+        lineColor.append(lineOrPointColor)
+        self.chartType.append(chartType)
         if chartType == .line {
-            self.addLine()
+            self.addLine(pointData: pointData,lineColor: lineOrPointColor)
         }else{
-            self.addPoint()
+            self.addPoint(pointData: pointData,pointColor: lineOrPointColor)
         }
     }
-    func addPoint()  {
+    fileprivate  func reSetPointData() {
+        for subLayer in layerArray {
+            subLayer.removeFromSuperlayer()
+        }
+        layerArray.removeAll()
+        for index in 0..<chartType.count {
+            let indexPoints = point[index]
+            let indexChartType = chartType[index]
+            let indexLineColor = lineColor[index]
+            if indexChartType == .line {
+                self.addLine(pointData: indexPoints,lineColor: indexLineColor)
+            }else{
+                self.addPoint(pointData: indexPoints,pointColor: indexLineColor)
+            }
+        }
+    }
+    fileprivate func addPoint(pointData:[CGPoint],pointColor:UIColor)  {
         let pointWidth = CGFloat(4)
         let pointHeight = CGFloat(4)
         
-        let firstPoint = lineArray.first!
-        let startPoint = CGPoint(x:firstPoint.x*width/10 + width/2 + xMargin - pointWidth/2,y:height/2 - firstPoint.y*height/10 + yMargin - pointHeight/2)
+        let firstPoint = pointData.first!
+        let startPoint = CGPoint(x:(firstPoint.x+CGFloat(1-xMarginMinValue))*xMargin-pointWidth/2,y:(CGFloat(yMarginMaxValue+1)-firstPoint.y)*yMargin-pointHeight/2)
         let layer = CALayer()
         layer.frame = CGRect(x:startPoint.x, y:startPoint.y, width:pointWidth, height:pointHeight)
-        layer.backgroundColor = UIColor.red.cgColor
+        layer.backgroundColor = pointColor.cgColor
         backgroundView.layer.addSublayer(layer)
+        layerArray.append(layer)
     }
-    func addLine(){
+    fileprivate func addLine(pointData:[CGPoint],lineColor:UIColor){
 
-        let firstPoint = lineArray.first!
-        let startPoint = CGPoint(x:firstPoint.x*width/10 + width/2+xMargin,y:height/2 - firstPoint.y*height/10 + yMargin)
+        let firstPoint = pointData.first!
+        let startPoint = CGPoint(x:(firstPoint.x+CGFloat(1-xMarginMinValue))*xMargin,y:(CGFloat(yMarginMaxValue+1)-firstPoint.y)*yMargin)
         let path = UIBezierPath()
         let layer = CAShapeLayer()
         
         path.move(to: startPoint)
-        for i in 0...lineArray.count - 2 {
+        for i in 0...pointData.count - 2 {
             if i != 0 {
-                let endPoint = lineArray[i + 1]
-                let controlPoint = lineArray[i]
+                let endPoint = pointData[i + 1]
+                let controlPoint = pointData[i]
                 
-                path.addQuadCurve(to: CGPoint(x:endPoint.x*width/10 + width/2 + xMargin,y:height/2 - endPoint.y*height/10 + yMargin), controlPoint: CGPoint(x:controlPoint.x*width/10 + width/2 + xMargin,y:height/2 - controlPoint.y*height/10 + yMargin))
+                path.addQuadCurve(to: CGPoint(x:(endPoint.x+CGFloat(1-xMarginMinValue))*xMargin,y:(CGFloat(yMarginMaxValue+1)-endPoint.y)*yMargin), controlPoint: CGPoint(x:(controlPoint.x+CGFloat(1-xMarginMinValue))*xMargin,y:(CGFloat(yMarginMaxValue+1)-controlPoint.y)*yMargin))
             }
         }
-       
-        
         layer.path = path.cgPath
         layer.fillColor = UIColor.clear.cgColor
-        layer.strokeColor = UIColor.red.cgColor
-        
+        layer.strokeColor = lineColor.cgColor
         backgroundView.layer.addSublayer(layer)
-
+        layerArray.append(layer)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -16,20 +16,26 @@ class ViewController: UIViewController {
         let chartView = ChartView()
         chartView.frame = CGRect(x:50,y:50,width:220,height:220)
         var pointData: [CGPoint] = []
-        for i in -50...50 {
+        for i in -30...50 {
             let xAxis = CGFloat(i)/10
             let yAxis = pow(2, xAxis) 
             /*
-             yAxis = xAxis - 3 一次函数
-             yAxis = pow(xAxis, 2)  幂函数
-             yAxis = pow(2, xAxis) 指数函数
-             yAxis = log (xAxis) 对数函数，此时应该设置i的值大于0
-             yAxis = sin (xAxis) 三角函数 （sin cos tan）
+             yAxis = xAxis - 3 linear function(一次函数)
+             yAxis = pow(xAxis, 2) - 1 power function(幂函数)
+             yAxis = pow(2, xAxis) exponential function(指数函数)
+             yAxis = log (xAxis) logarithmic function, xAxis should be greater than zero(对数函数, 此时应该设置xAxis的值大于0)
+             yAxis = sin (xAxis) circular function(三角函数),
              */
             pointData.append(CGPoint(x:xAxis,y:yAxis))
         }
-        chartView.setPointData(pointData: pointData, chartType: .line)
-        chartView.setPointData(pointData: [CGPoint(x:3,y:3)], chartType: .point)
+        chartView.setPointData(pointData: pointData, chartType: .line,lineOrPointColor:UIColor .red)
+        chartView.setPointData(pointData: [CGPoint(x:3,y:3)], chartType: .point,lineOrPointColor:UIColor .red)
+        chartView.setPointData(pointData: [CGPoint(x:-2,y:1)], chartType: .point,lineOrPointColor:UIColor .black)
+        chartView.xMarginMaxValue = 5
+        chartView.axisColor = UIColor.gray
+        chartView.xMarginMinValue = -3
+        chartView.yMarginMaxValue = 6
+        chartView.yMarginMinValue = -2
         self.view.addSubview(chartView)
     }
 
