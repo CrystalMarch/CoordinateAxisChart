@@ -25,44 +25,44 @@ class ChartView: UIView {
     fileprivate let xArrowLayer = CAShapeLayer()
     fileprivate var xMargin = CGFloat(14)
     fileprivate var yMargin = CGFloat(14)
-    fileprivate var _xMarginMaxValue:Int = 5
-    var xMarginMaxValue:Int {
+    fileprivate var _xMaxValue:Int = 5
+    var xMaxValue:Int {
         get{
-            return _xMarginMaxValue
+            return _xMaxValue
         }
         set{
-          _xMarginMaxValue = newValue
+          _xMaxValue = newValue
             updateLayerFrames()
             
         }
     }
-   fileprivate var _yMarginMaxValue:Int = 5
-    var yMarginMaxValue:Int {
+   fileprivate var _yMaxValue:Int = 5
+    var yMaxValue:Int {
         get{
-            return _yMarginMaxValue
+            return _yMaxValue
         }
         set{
-            _yMarginMaxValue = newValue
+            _yMaxValue = newValue
             updateLayerFrames()
         }
     }
-   fileprivate var _xMarginMinValue:Int = -5
-    var xMarginMinValue:Int {
+   fileprivate var _xMinValue:Int = -5
+    var xMinValue:Int {
         get{
-           return _xMarginMinValue
+           return _xMinValue
         }
         set{
-            _xMarginMinValue = newValue
+            _xMinValue = newValue
             updateLayerFrames()
         }
     }
-   fileprivate var _yMarginMinValue:Int = -5
-    var yMarginMinValue:Int {
+   fileprivate var _yMinValue:Int = -5
+    var yMinValue:Int {
         get{
-            return _yMarginMinValue
+            return _yMinValue
         }
         set{
-            _yMarginMinValue = newValue
+            _yMinValue = newValue
             updateLayerFrames()
         }
     }
@@ -90,8 +90,8 @@ class ChartView: UIView {
    fileprivate func updateLayerFrames() {
         self.layer.masksToBounds = true
         
-        xMargin = self.frame.width/CGFloat(2+xMarginMaxValue-xMarginMinValue)
-        yMargin = self.frame.width/CGFloat(2+yMarginMaxValue-yMarginMinValue)
+        xMargin = self.frame.width/CGFloat(2+xMaxValue-_xMinValue)
+        yMargin = self.frame.width/CGFloat(2+yMaxValue-_yMinValue)
         width = self.frame.width - 2*xMargin
         height = self.frame.height - 2*yMargin
         if width > 0 {
@@ -109,16 +109,16 @@ class ChartView: UIView {
        
     }
    fileprivate func addAxis() {
-        xAxis.frame = CGRect(x:0,y:CGFloat(yMarginMaxValue + 1)*yMargin,width:self.frame.width,height:0.5)
-        yAxis.frame = CGRect(x:CGFloat(1-xMarginMinValue)*xMargin,y:0,width:0.5,height:self.frame.height)
+        xAxis.frame = CGRect(x:0,y:CGFloat(yMaxValue + 1)*yMargin,width:self.frame.width,height:0.5)
+        yAxis.frame = CGRect(x:CGFloat(1-xMinValue)*xMargin,y:0,width:0.5,height:self.frame.height)
         xAxis.backgroundColor = _axisColor
         yAxis.backgroundColor = _axisColor
         backgroundView.addSubview(xAxis)
         backgroundView.addSubview(yAxis)
-        for xIndex in xMarginMinValue...xMarginMaxValue{
+        for xIndex in _xMinValue...xMaxValue{
             let xLine = UIView()
             xLine.backgroundColor = _axisColor
-            xLine.frame = CGRect(x:CGFloat(xIndex-xMarginMinValue+1)*xMargin,y:(CGFloat(yMarginMaxValue + 1)-0.25)*yMargin,width:0.5,height:height/20)
+            xLine.frame = CGRect(x:CGFloat(xIndex-xMinValue+1)*xMargin,y:(CGFloat(yMaxValue + 1)-0.25)*yMargin,width:0.5,height:height/20)
             backgroundView.addSubview(xLine)
             let xLabel = UILabel()
             xLabel.textColor = _axisColor
@@ -129,20 +129,20 @@ class ChartView: UIView {
             }else{
                 xLabel.textAlignment = .right
             }
-            xLabel.frame = CGRect(x:(CGFloat(xIndex-xMarginMinValue+1)-0.5)*xMargin,y:(CGFloat(yMarginMaxValue + 1)+0.25)*yMargin,width:xMargin,height:yMargin/2)
+            xLabel.frame = CGRect(x:(CGFloat(xIndex-xMinValue+1)-0.5)*xMargin,y:(CGFloat(yMaxValue + 1)+0.25)*yMargin,width:xMargin,height:yMargin/2)
             backgroundView.addSubview(xLabel)
         }
         
-        for yIndex in yMarginMinValue...yMarginMaxValue {
+        for yIndex in yMinValue...yMaxValue {
             
             let yLine = UIView()
             yLine.backgroundColor = _axisColor
-            yLine.frame = CGRect(x:(CGFloat(1-xMarginMinValue)-0.25)*xMargin,y:CGFloat(yMarginMaxValue-yIndex+1)*yMargin,width:xMargin/2,height:0.5)
+            yLine.frame = CGRect(x:(CGFloat(1-xMinValue)-0.25)*xMargin,y:CGFloat(yMaxValue-yIndex+1)*yMargin,width:xMargin/2,height:0.5)
             backgroundView.addSubview(yLine)
             
             let yLabel = UILabel()
             yLabel.textColor = _axisColor
-            yLabel.frame = CGRect(x:(CGFloat(1-xMarginMinValue)+0.25)*xMargin,y:(CGFloat(yMarginMaxValue-yIndex+1)-0.5)*yMargin,width:xMargin,height:yMargin)
+            yLabel.frame = CGRect(x:(CGFloat(1-xMinValue)+0.25)*xMargin,y:(CGFloat(yMaxValue-yIndex+1)-0.5)*yMargin,width:xMargin,height:yMargin)
             yLabel.font = UIFont.systemFont(ofSize: 10)
             yLabel.textAlignment = .center
             if yIndex != 0  {
@@ -155,17 +155,17 @@ class ChartView: UIView {
         xArrowLayer.removeFromSuperlayer()
         yArrowLayer.removeFromSuperlayer()
         let path = UIBezierPath()
-        path.move(to: CGPoint(x:CGFloat(1-xMarginMinValue)*xMargin-5,y:5))
-        path.addLine(to: CGPoint(x:CGFloat(1-xMarginMinValue)*xMargin,y:0))
-        path.addLine(to: CGPoint(x:CGFloat(1-xMarginMinValue)*xMargin+5,y:5))
+        path.move(to: CGPoint(x:CGFloat(1-xMinValue)*xMargin-5,y:5))
+        path.addLine(to: CGPoint(x:CGFloat(1-xMinValue)*xMargin,y:0))
+        path.addLine(to: CGPoint(x:CGFloat(1-xMinValue)*xMargin+5,y:5))
         yArrowLayer.path = path.cgPath
         yArrowLayer.fillColor = UIColor.clear.cgColor
         yArrowLayer.strokeColor = _axisColor.cgColor
         yArrowLayer.lineWidth = 0.5
         backgroundView.layer.addSublayer(yArrowLayer)
-        path.move(to: CGPoint(x:backgroundView.frame.size.width-5,y:CGFloat(yMarginMaxValue + 1)*yMargin-5))
-        path.addLine(to: CGPoint(x:backgroundView.frame.size.width,y:CGFloat(yMarginMaxValue + 1)*yMargin))
-        path.addLine(to: CGPoint(x:backgroundView.frame.size.width-5,y:CGFloat(yMarginMaxValue + 1)*yMargin+5))
+        path.move(to: CGPoint(x:backgroundView.frame.size.width-5,y:CGFloat(yMaxValue + 1)*yMargin-5))
+        path.addLine(to: CGPoint(x:backgroundView.frame.size.width,y:CGFloat(yMaxValue + 1)*yMargin))
+        path.addLine(to: CGPoint(x:backgroundView.frame.size.width-5,y:CGFloat(yMaxValue + 1)*yMargin+5))
         xArrowLayer.path = path.cgPath
         xArrowLayer.fillColor = UIColor.clear.cgColor
         xArrowLayer.strokeColor = _axisColor.cgColor
@@ -204,7 +204,7 @@ class ChartView: UIView {
         let pointHeight = CGFloat(4)
         
         let firstPoint = pointData.first!
-        let startPoint = CGPoint(x:(firstPoint.x+CGFloat(1-xMarginMinValue))*xMargin-pointWidth/2,y:(CGFloat(yMarginMaxValue+1)-firstPoint.y)*yMargin-pointHeight/2)
+        let startPoint = CGPoint(x:(firstPoint.x+CGFloat(1-xMinValue))*xMargin-pointWidth/2,y:(CGFloat(yMaxValue+1)-firstPoint.y)*yMargin-pointHeight/2)
         let layer = CALayer()
         layer.frame = CGRect(x:startPoint.x, y:startPoint.y, width:pointWidth, height:pointHeight)
         layer.backgroundColor = pointColor.cgColor
@@ -214,7 +214,7 @@ class ChartView: UIView {
     fileprivate func addLine(pointData:[CGPoint],lineColor:UIColor){
 
         let firstPoint = pointData.first!
-        let startPoint = CGPoint(x:(firstPoint.x+CGFloat(1-xMarginMinValue))*xMargin,y:(CGFloat(yMarginMaxValue+1)-firstPoint.y)*yMargin)
+        let startPoint = CGPoint(x:(firstPoint.x+CGFloat(1-xMinValue))*xMargin,y:(CGFloat(yMaxValue+1)-firstPoint.y)*yMargin)
         let path = UIBezierPath()
         let layer = CAShapeLayer()
         
@@ -224,7 +224,7 @@ class ChartView: UIView {
                 let endPoint = pointData[i + 1]
                 let controlPoint = pointData[i]
                 
-                path.addQuadCurve(to: CGPoint(x:(endPoint.x+CGFloat(1-xMarginMinValue))*xMargin,y:(CGFloat(yMarginMaxValue+1)-endPoint.y)*yMargin), controlPoint: CGPoint(x:(controlPoint.x+CGFloat(1-xMarginMinValue))*xMargin,y:(CGFloat(yMarginMaxValue+1)-controlPoint.y)*yMargin))
+                path.addQuadCurve(to: CGPoint(x:(endPoint.x+CGFloat(1-xMinValue))*xMargin,y:(CGFloat(yMaxValue+1)-endPoint.y)*yMargin), controlPoint: CGPoint(x:(controlPoint.x+CGFloat(1-xMinValue))*xMargin,y:(CGFloat(yMaxValue+1)-controlPoint.y)*yMargin))
             }
         }
         layer.path = path.cgPath

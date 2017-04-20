@@ -31,11 +31,11 @@ class ViewController: UIViewController {
         chartView.setPointData(pointData: pointData, chartType: .line,lineOrPointColor:UIColor .red)
         chartView.setPointData(pointData: [CGPoint(x:3,y:3)], chartType: .point,lineOrPointColor:UIColor .red)
         chartView.setPointData(pointData: [CGPoint(x:-2,y:1)], chartType: .point,lineOrPointColor:UIColor .black)
-        chartView.xMarginMaxValue = 5
+        chartView.xMaxValue = 5
         chartView.axisColor = UIColor.gray
-        chartView.xMarginMinValue = -3
-        chartView.yMarginMaxValue = 6
-        chartView.yMarginMinValue = -2
+        chartView.xMinValue = -3
+        chartView.yMaxValue = 6
+        chartView.yMinValue = -4
         self.view.addSubview(chartView)
     }
 
