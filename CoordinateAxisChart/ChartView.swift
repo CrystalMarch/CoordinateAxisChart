@@ -16,10 +16,11 @@ class ChartView: UIView {
     fileprivate let yAxis = UIView()
     fileprivate var width :CGFloat!
     fileprivate var height :CGFloat!
-    fileprivate var point = Array<[CGPoint]>()
-    fileprivate var chartType = Array<ChartType>()
-    fileprivate var lineColor = Array<UIColor>()
+    fileprivate var pointArray = Array<[CGPoint]>()
+    fileprivate var chartTypeArray = Array<ChartType>()
+    fileprivate var lineColorArray = Array<UIColor>()
     fileprivate var layerArray = Array<CALayer>()
+    fileprivate var animationArray = Array<Bool>()
     fileprivate let backgroundView = UIView()
     fileprivate let yArrowLayer = CAShapeLayer()
     fileprivate let xArrowLayer = CAShapeLayer()
@@ -76,6 +77,17 @@ class ChartView: UIView {
             updateLayerFrames()
         }
     }
+    fileprivate var _animationTime :Float = 1.0
+    var animationTime :Float{
+        get{
+            return _animationTime
+        }
+        set{
+            _animationTime = newValue
+            updateLayerFrames()
+        }
+    }
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -173,12 +185,13 @@ class ChartView: UIView {
         backgroundView.layer.addSublayer(xArrowLayer)
         
     }
-    func setPointData(pointData:[CGPoint],chartType:ChartType,lineOrPointColor:UIColor) {
-        point.append(pointData)
-        lineColor.append(lineOrPointColor)
-        self.chartType.append(chartType)
+    func setPointData(pointData:[CGPoint],chartType:ChartType,lineOrPointColor:UIColor,animation:Bool) {
+        pointArray.append(pointData)
+        lineColorArray.append(lineOrPointColor)
+        chartTypeArray.append(chartType)
+        animationArray.append(animation)
         if chartType == .line {
-            self.addLine(pointData: pointData,lineColor: lineOrPointColor)
+            self.addLine(pointData: pointData,lineColor: lineOrPointColor,animation: animation)
         }else{
             self.addPoint(pointData: pointData,pointColor: lineOrPointColor)
         }
@@ -188,12 +201,14 @@ class ChartView: UIView {
             subLayer.removeFromSuperlayer()
         }
         layerArray.removeAll()
-        for index in 0..<chartType.count {
-            let indexPoints = point[index]
-            let indexChartType = chartType[index]
-            let indexLineColor = lineColor[index]
+        for index in 0..<chartTypeArray.count {
+            let indexPoints = pointArray[index]
+            let indexChartType = chartTypeArray[index]
+            let indexLineColor = lineColorArray[index]
+            let indexAnimation = animationArray[index]
+            
             if indexChartType == .line {
-                self.addLine(pointData: indexPoints,lineColor: indexLineColor)
+                self.addLine(pointData: indexPoints,lineColor: indexLineColor,animation: indexAnimation)
             }else{
                 self.addPoint(pointData: indexPoints,pointColor: indexLineColor)
             }
@@ -211,7 +226,7 @@ class ChartView: UIView {
         backgroundView.layer.addSublayer(layer)
         layerArray.append(layer)
     }
-    fileprivate func addLine(pointData:[CGPoint],lineColor:UIColor){
+    fileprivate func addLine(pointData:[CGPoint],lineColor:UIColor,animation:Bool){
 
         let firstPoint = pointData.first!
         let startPoint = CGPoint(x:(firstPoint.x+CGFloat(1-xMinValue))*xMargin,y:(CGFloat(yMaxValue+1)-firstPoint.y)*yMargin)
@@ -228,6 +243,17 @@ class ChartView: UIView {
             }
         }
         layer.path = path.cgPath
+        if animation {
+            let animation = CABasicAnimation()
+            animation.keyPath = "strokeEnd"
+            animation.duration = CFTimeInterval(animationTime)
+            animation.toValue = 1
+            animation.fromValue = 0
+            animation.autoreverses = false
+            animation.timingFunction = CAMediaTimingFunction.init(name: kCAMediaTimingFunctionEaseInEaseOut)
+            layer.add(animation, forKey: "stroke")
+        }
+        
         layer.fillColor = UIColor.clear.cgColor
         layer.strokeColor = lineColor.cgColor
         backgroundView.layer.addSublayer(layer)
