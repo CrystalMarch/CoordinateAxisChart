@@ -16,9 +16,9 @@ class ViewController: UIViewController {
         let chartView = ChartView()
         chartView.frame = CGRect(x:50,y:50,width:220,height:220)
         var pointData: [CGPoint] = []
-        for i in -30...50 {
+        for i in -40...70 {
             let xAxis = CGFloat(i)/10
-            let yAxis = pow(2, xAxis) 
+            let yAxis = tan (xAxis)
             /*
              yAxis = xAxis - 3 linear function(一次函数)
              yAxis = pow(xAxis, 2) - 1 power function(幂函数)
@@ -29,13 +29,12 @@ class ViewController: UIViewController {
             pointData.append(CGPoint(x:xAxis,y:yAxis))
         }
         chartView.setPointData(pointData: pointData, chartType: .line,lineOrPointColor:UIColor .red)
-        chartView.setPointData(pointData: [CGPoint(x:3,y:3)], chartType: .point,lineOrPointColor:UIColor .red)
         chartView.setPointData(pointData: [CGPoint(x:-2,y:1)], chartType: .point,lineOrPointColor:UIColor .black)
-        chartView.xMaxValue = 5
+        chartView.xMaxValue = 7
         chartView.axisColor = UIColor.gray
-        chartView.xMinValue = -3
-        chartView.yMaxValue = 6
-        chartView.yMinValue = -4
+        chartView.xMinValue = -4
+        chartView.yMaxValue = 5
+        chartView.yMinValue = -5
         self.view.addSubview(chartView)
     }
 

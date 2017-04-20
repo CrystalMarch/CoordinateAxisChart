@@ -118,7 +118,7 @@ class ChartView: UIView {
         for xIndex in _xMinValue...xMaxValue{
             let xLine = UIView()
             xLine.backgroundColor = _axisColor
-            xLine.frame = CGRect(x:CGFloat(xIndex-xMinValue+1)*xMargin,y:(CGFloat(yMaxValue + 1)-0.25)*yMargin,width:0.5,height:height/20)
+            xLine.frame = CGRect(x:CGFloat(xIndex-xMinValue+1)*xMargin,y:(CGFloat(yMaxValue + 1)-0.25)*yMargin,width:0.5,height:yMargin/2)
             backgroundView.addSubview(xLine)
             let xLabel = UILabel()
             xLabel.textColor = _axisColor
