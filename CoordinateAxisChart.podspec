@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/CrystalMarch/CoordinateAxisChart.git", :tag => "0.0.1" }
-  s.source_files  = "CoordinateAxisChart/*.swift", "CoordinateAxisChart/**/*.swift"
+  s.source_files  = "CoordinateAxisChart/CoordinateAxisChart/*.swift", "CoordinateAxisChart/CoordinateAxisChart/**/*.swift"
   s.exclude_files = "Classes/Exclude"
   s.frameworks = "Foundation", "UIKit"
    s.requires_arc = true
