@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let chartView = ChartView()
+        let chartView = CoordinateAxisChart()
         chartView.frame = CGRect(x:50,y:50,width:220,height:220)
         var pointData: [CGPoint] = []
         for i in -40...70 {

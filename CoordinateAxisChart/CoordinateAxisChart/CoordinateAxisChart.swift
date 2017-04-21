@@ -11,7 +11,7 @@ enum ChartType {
     case point
     case line
 }
-class ChartView: UIView {
+class CoordinateAxisChart: UIView {
     fileprivate let xAxis = UIView()
     fileprivate let yAxis = UIView()
     fileprivate var width :CGFloat!
