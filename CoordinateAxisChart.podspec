@@ -1,14 +1,14 @@
 Pod::Spec.new do |s|
 
   s.name         = "CoordinateAxisChart"
-  s.version      = "0.0.3"
+  s.version      = "0.0.4"
   s.summary      = "A short description of CoordinateAxisChart."
   s.homepage     = "https://github.com/CrystalMarch/CoordinateAxisChart"
   s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
   s.author             = { "Crystal" => "zhuhuiping@shinetechchina.com" }
   s.platform     = :ios
   s.platform     = :ios, "8.0"
-  s.source       = { :git => "https://github.com/CrystalMarch/CoordinateAxisChart.git", :tag => "0.0.3" }
+  s.source       = { :git => "https://github.com/CrystalMarch/CoordinateAxisChart.git", :tag => "0.0.4" }
   s.source_files  = "CoordinateAxisChart/CoordinateAxisChart/*.swift", "CoordinateAxisChart/CoordinateAxisChart/**/*.swift"
   s.exclude_files = "Classes/Exclude"
   s.frameworks = "Foundation", "UIKit"

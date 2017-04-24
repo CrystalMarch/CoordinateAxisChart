@@ -11,7 +11,7 @@ enum ChartType {
     case point
     case line
 }
-class CoordinateAxisChart: UIView {
+open class CoordinateAxisChart: UIView {
     fileprivate let xAxis = UIView()
     fileprivate let yAxis = UIView()
     fileprivate var width :CGFloat!
@@ -94,7 +94,7 @@ class CoordinateAxisChart: UIView {
         
         
     }
-    override var frame: CGRect {
+    override open var frame: CGRect {
         didSet {
             updateLayerFrames()
         } 
@@ -260,7 +260,7 @@ class CoordinateAxisChart: UIView {
         layerArray.append(layer)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
