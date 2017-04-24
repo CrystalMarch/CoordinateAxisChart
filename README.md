@@ -40,8 +40,6 @@ import CoordinateAxisChart
 
 ## Quick start 
 
-Multiline chart:
-
 ```swift
 let chartView = CoordinateAxisChart()
         chartView.frame = CGRect(x:50,y:50,width:220,height:220)
