@@ -11,9 +11,9 @@
 ### Android version entrance
 > [CoordinateAxisChart for Android](https://github.com/KiBa1215/CoordinateAxisChart)
 
+### Effect picture
 ![alt text](https://github.com/CrystalMarch/CoordinateAxisChart/blob/master/charttwo.png)
 ![alt text](https://github.com/CrystalMarch/CoordinateAxisChart/blob/master/chart.png)
-
 
 ## Installation
 
