@@ -7,7 +7,7 @@
 //
 
 import UIKit
-enum ChartType {
+public enum ChartType {
     case point
     case line
 }
@@ -27,7 +27,7 @@ open class CoordinateAxisChart: UIView {
     fileprivate var xMargin = CGFloat(14)
     fileprivate var yMargin = CGFloat(14)
     fileprivate var _xMaxValue:Int = 5
-    var xMaxValue:Int {
+    public var xMaxValue:Int {
         get{
             return _xMaxValue
         }
@@ -38,7 +38,7 @@ open class CoordinateAxisChart: UIView {
         }
     }
    fileprivate var _yMaxValue:Int = 5
-    var yMaxValue:Int {
+   public var yMaxValue:Int {
         get{
             return _yMaxValue
         }
@@ -48,7 +48,7 @@ open class CoordinateAxisChart: UIView {
         }
     }
    fileprivate var _xMinValue:Int = -5
-    var xMinValue:Int {
+   public var xMinValue:Int {
         get{
            return _xMinValue
         }
@@ -58,7 +58,7 @@ open class CoordinateAxisChart: UIView {
         }
     }
    fileprivate var _yMinValue:Int = -5
-    var yMinValue:Int {
+   public var yMinValue:Int {
         get{
             return _yMinValue
         }
@@ -68,7 +68,7 @@ open class CoordinateAxisChart: UIView {
         }
     }
     fileprivate var _axisColor :UIColor = UIColor.black
-    var axisColor:UIColor{
+    public var axisColor:UIColor{
         get{
             return _axisColor
         }
@@ -78,7 +78,7 @@ open class CoordinateAxisChart: UIView {
         }
     }
     fileprivate var _animationTime :Float = 1.0
-    var animationTime :Float{
+    public var animationTime :Float{
         get{
             return _animationTime
         }
@@ -185,7 +185,7 @@ open class CoordinateAxisChart: UIView {
         backgroundView.layer.addSublayer(xArrowLayer)
         
     }
-    func setPointData(pointData:[CGPoint],chartType:ChartType,lineOrPointColor:UIColor,animation:Bool) {
+   public func setPointData(pointData:[CGPoint],chartType:ChartType,lineOrPointColor:UIColor,animation:Bool) {
         pointArray.append(pointData)
         lineColorArray.append(lineOrPointColor)
         chartTypeArray.append(chartType)
