@@ -8,6 +8,9 @@
 * logarithmic function, xAxis should be greater than zero(对数函数, 此时应该设置axis的值大于0): yAxis = log (xAxis) 
 * circular function(三角函数), like sin, cos, tan: yAxis = sin (xAxis) 
 
+### Android version entrance
+> [CoordinateAxisChart for Android](https://github.com/KiBa1215/CoordinateAxisChart)
+
 ### Properties:
 #### xMaxValue:
 * set the max value of x axis(设置x轴的最大值)
