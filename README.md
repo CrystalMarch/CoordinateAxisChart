@@ -10,6 +10,11 @@
 
 ### Android version entrance
 > [CoordinateAxisChart for Android](https://github.com/KiBa1215/CoordinateAxisChart)
+
+### Effect picture
+![alt text](https://github.com/CrystalMarch/CoordinateAxisChart/blob/master/charttwo.png)
+![alt text](https://github.com/CrystalMarch/CoordinateAxisChart/blob/master/chart.png)
+
 ## Installation
 
 ### CocoaPods
@@ -39,7 +44,6 @@ import CoordinateAxisChart
 ```
 
 ## Quick start 
-
 ```swift
 let chartView = CoordinateAxisChart()
         chartView.frame = CGRect(x:50,y:50,width:220,height:220)
@@ -79,6 +83,4 @@ let chartView = CoordinateAxisChart()
 * lineOrPointColor: set the line or point color
 * animation: set whether animation is needed 
 
-![alt text](https://github.com/CrystalMarch/CoordinateAxisChart/blob/master/charttwo.png)
-![alt text](https://github.com/CrystalMarch/CoordinateAxisChart/blob/master/chart.png)
 
