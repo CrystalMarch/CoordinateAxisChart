@@ -10,7 +10,56 @@
 
 ### Android version entrance
 > [CoordinateAxisChart for Android](https://github.com/KiBa1215/CoordinateAxisChart)
+## Installation
 
+### CocoaPods
+
+Add to your Podfile:
+
+Swift 3.0:
+```ruby
+use_frameworks!
+pod 'CoordinateAxisChart', '~> 0.0.5'
+```
+Note: To use Swift 3.x / master, you need Xcode 8+
+
+To use master directly (it's usually stable):
+```ruby
+pod 'CoordinateAxisChart', :git => 'https://github.com/CrystalMarch/CoordinateAxisChart.git'
+```
+
+And then:
+```ruby
+pod install
+```
+
+Import the framework in your code:
+```swift
+import CoordinateAxisChart
+```
+
+## Quick start 
+
+Multiline chart:
+
+```swift
+let chartView = CoordinateAxisChart()
+        chartView.frame = CGRect(x:50,y:50,width:220,height:220)
+        var pointData: [CGPoint] = []
+        for i in -40...70 {
+            let xAxis = CGFloat(i)/10
+            let yAxis = sin (xAxis)
+            pointData.append(CGPoint(x:xAxis,y:yAxis))
+        }
+        chartView.setPointData(pointData: pointData, chartType: .line,lineOrPointColor:UIColor .red,animation: true)
+        chartView.xMaxValue = 7
+        chartView.animationTime = 2
+        chartView.axisColor = UIColor.gray
+        chartView.xMinValue = -4
+        chartView.yMaxValue = 3
+        chartView.yMinValue = -3
+        self.view.addSubview(chartView)
+```
 ### Properties:
 #### xMaxValue:
 * set the max value of x axis(设置x轴的最大值)
