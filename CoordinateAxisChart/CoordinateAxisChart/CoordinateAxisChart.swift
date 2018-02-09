@@ -185,6 +185,15 @@ open class CoordinateAxisChart: UIView {
         backgroundView.layer.addSublayer(xArrowLayer)
         
     }
+    public func clear(){
+        for subLayer in layerArray {
+            subLayer.removeFromSuperlayer()
+        }
+        layerArray.removeAll()
+    }
+    public func refresh(){
+        self.reSetPointData()
+    }
    public func setPointData(pointData:[CGPoint],chartType:ChartType,lineOrPointColor:UIColor,animation:Bool) {
         pointArray.append(pointData)
         lineColorArray.append(lineOrPointColor)

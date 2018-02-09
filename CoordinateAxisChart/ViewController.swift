@@ -9,12 +9,46 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    let chartView = CoordinateAxisChart()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let chartView = CoordinateAxisChart()
-        chartView.frame = CGRect(x:50,y:50,width:220,height:220)
+        
+        let refreshButton =  UIButton()
+        refreshButton.frame = CGRect(x:30,y:40,width:120,height:30)
+        refreshButton.setTitle("refresh", for: .normal)
+        refreshButton.addTarget(self, action: #selector(self.refreshButonClick(sender:)), for: .touchUpInside)
+        refreshButton.setTitleColor(.gray, for: .normal)
+        refreshButton.layer.borderWidth = 1
+        refreshButton.layer.borderColor = UIColor.gray.cgColor
+        self.view.addSubview(refreshButton)
+        let clearButton =  UIButton()
+        clearButton.frame = CGRect(x:self.view.frame.size.width-150,y:40,width:120,height:30)
+        clearButton.setTitle("clear", for: .normal)
+        clearButton.addTarget(self, action: #selector(self.clearButtonClick(sender:)), for: .touchUpInside)
+        clearButton.setTitleColor(.gray, for: .normal)
+        clearButton.layer.borderWidth = 1
+        clearButton.layer.borderColor = UIColor.gray.cgColor
+        self.view.addSubview(clearButton)
+        let changeAxisValueButton =  UIButton()
+        changeAxisValueButton.frame = CGRect(x:30,y:80,width:self.view.frame.size.width - 60,height:30)
+        changeAxisValueButton.setTitle("change coordinate axis value", for: .normal)
+        changeAxisValueButton.addTarget(self, action: #selector(self.changeAxisValueButtonClick(sender:)), for: .touchUpInside)
+        changeAxisValueButton.setTitleColor(.gray, for: .normal)
+        changeAxisValueButton.layer.borderWidth = 1
+        changeAxisValueButton.layer.borderColor = UIColor.gray.cgColor
+        self.view.addSubview(changeAxisValueButton)
+        
+        let changeAxisColorButton =  UIButton()
+        changeAxisColorButton.frame = CGRect(x:30,y:120,width:self.view.frame.size.width - 60,height:30)
+        changeAxisColorButton.setTitle("change coordinate axis color", for: .normal)
+        changeAxisColorButton.addTarget(self, action: #selector(self.changeAxisColorButtonClick(sender:)), for: .touchUpInside)
+        changeAxisColorButton.setTitleColor(.gray, for: .normal)
+        changeAxisColorButton.layer.borderWidth = 1
+        changeAxisColorButton.layer.borderColor = UIColor.gray.cgColor
+        self.view.addSubview(changeAxisColorButton)
+        
+        chartView.frame = CGRect(x:50,y:170,width:220,height:220)
         var pointData: [CGPoint] = []
         for i in -40...70 {
             let xAxis = CGFloat(i)/10
@@ -37,6 +71,24 @@ class ViewController: UIViewController {
         chartView.yMaxValue = 3
         chartView.yMinValue = -3
         self.view.addSubview(chartView)
+    }
+    func refreshButonClick(sender:UIButton) {
+        chartView.refresh()
+    }
+    func clearButtonClick(sender:UIButton) {
+        chartView.clear()
+    }
+    func changeAxisColorButtonClick(sender: UIButton) {
+        let red = CGFloat(arc4random()%256)/255.0
+        let green = CGFloat(arc4random()%256)/255.0
+        let blue = CGFloat(arc4random()%256)/255.0
+        chartView.axisColor = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+    }
+    func changeAxisValueButtonClick(sender:UIButton) {
+        chartView.xMaxValue = Int(arc4random()%10)
+        chartView.xMinValue = -Int(arc4random()%10)
+        chartView.yMaxValue = Int(arc4random()%10)
+        chartView.yMinValue = -Int(arc4random()%10)
     }
 
     override func didReceiveMemoryWarning() {
