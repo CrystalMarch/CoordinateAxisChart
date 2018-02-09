@@ -196,6 +196,7 @@
 				TargetAttributes = {
 					3586946E1E9F78C700F052D2 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 52SDKDKNS7;
 						ProvisioningStyle = Automatic;
 					};
 					358694821E9F78C700F052D2 = {
@@ -414,6 +415,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 52SDKDKNS7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CoordinateAxisChart",
@@ -430,6 +432,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 52SDKDKNS7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CoordinateAxisChart",
