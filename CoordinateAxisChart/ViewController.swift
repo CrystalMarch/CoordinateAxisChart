@@ -14,7 +14,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        let refreshButton =  UIButton()
+        let refreshButton = UIButton()
         refreshButton.frame = CGRect(x:30,y:40,width:120,height:30)
         refreshButton.setTitle("refresh", for: .normal)
         refreshButton.addTarget(self, action: #selector(self.refreshButonClick(sender:)), for: .touchUpInside)
@@ -53,9 +53,8 @@ class ViewController: UIViewController {
         self.view.addSubview(changeAxisColorButton)
 
         chartView.frame = CGRect(x:50,y:170,width:220,height:220)
-        var pointData: [CGPoint] = []
-        for i in -40...70 {
-            let xAxis = CGFloat(i)/10
+        let pointData: [CGPoint] = (-40...70).map {
+            let xAxis = CGFloat($0)/10
             let yAxis = sin (xAxis)
             /*
              yAxis = xAxis - 3 linear function(一次函数)
@@ -64,13 +63,14 @@ class ViewController: UIViewController {
              yAxis = log (xAxis) logarithmic function, xAxis should be greater than zero(对数函数, 此时应该设置xAxis的值大于0)
              yAxis = sin (xAxis) circular function(三角函数),
              */
-            pointData.append(CGPoint(x:xAxis,y:yAxis))
+            return CGPoint(x: xAxis, y: yAxis)
         }
+
         chartView.setPointData(pointData: pointData, chartType: .line, lineOrPointColor: .red, animation: true)
 //        chartView.setPointData(pointData: [CGPoint(x:-2,y:1)], chartType: .point,lineOrPointColor:UIColor .black,animation: false)
         chartView.xMaxValue = 7
         chartView.animationTime = 2
-        chartView.axisColor = UIColor.gray
+        chartView.axisColor = .gray
         chartView.xMinValue = -4
         chartView.yMaxValue = 3
         chartView.yMinValue = -3
@@ -83,10 +83,7 @@ class ViewController: UIViewController {
         chartView.clear()
     }
     func changeAxisColorButtonClick(sender: UIButton) {
-        let red = CGFloat(arc4random()%256)/255.0
-        let green = CGFloat(arc4random()%256)/255.0
-        let blue = CGFloat(arc4random()%256)/255.0
-        chartView.axisColor = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+        chartView.axisColor = .random()
     }
     func changeAxisValueButtonClick(sender:UIButton) {
         chartView.xMaxValue = Int(arc4random()%10)
@@ -99,7 +96,14 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
 
-
+extension UIColor {
+    static func random() -> UIColor {
+        let red = CGFloat(arc4random()%256)/255.0
+        let green = CGFloat(arc4random()%256)/255.0
+        let blue = CGFloat(arc4random()%256)/255.0
+        return UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+    }
 }
 

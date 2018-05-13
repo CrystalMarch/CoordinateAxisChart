@@ -209,7 +209,7 @@ open class CoordinateAxisChart: UIView {
         backgroundView.layer.addSublayer(layer)
         layerArray.append(layer)
     }
-    fileprivate func addLine(pointData:[CGPoint],lineColor:UIColor,animation:Bool){
+    fileprivate func addLine(pointData:[CGPoint], lineColor:UIColor, animation: Bool) {
 
         let firstPoint = pointData.first!
         let startPoint = CGPoint(x:(firstPoint.x+CGFloat(1-xMinValue))*xMargin,y:(CGFloat(yMaxValue+1)-firstPoint.y)*yMargin)
