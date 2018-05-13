@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+
         let refreshButton =  UIButton()
         refreshButton.frame = CGRect(x:30,y:40,width:120,height:30)
         refreshButton.setTitle("refresh", for: .normal)
@@ -41,7 +41,7 @@ class ViewController: UIViewController {
         changeAxisValueButton.layer.borderWidth = 1
         changeAxisValueButton.layer.borderColor = UIColor.gray.cgColor
         self.view.addSubview(changeAxisValueButton)
-        
+
         let changeAxisColorButton =  UIButton()
         changeAxisColorButton.frame = CGRect(x:30,y:120,width:self.view.frame.size.width - 60,height:30)
         changeAxisColorButton.setTitle("change coordinate axis color", for: .normal)
@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         changeAxisColorButton.layer.borderWidth = 1
         changeAxisColorButton.layer.borderColor = UIColor.gray.cgColor
         self.view.addSubview(changeAxisColorButton)
-        
+
         chartView.frame = CGRect(x:50,y:170,width:220,height:220)
         var pointData: [CGPoint] = []
         for i in -40...70 {
@@ -66,7 +66,7 @@ class ViewController: UIViewController {
              */
             pointData.append(CGPoint(x:xAxis,y:yAxis))
         }
-        chartView.setPointData(pointData: pointData, chartType: .line,lineOrPointColor:UIColor .red,animation: true)
+        chartView.setPointData(pointData: pointData, chartType: .line, lineOrPointColor: .red, animation: true)
 //        chartView.setPointData(pointData: [CGPoint(x:-2,y:1)], chartType: .point,lineOrPointColor:UIColor .black,animation: false)
         chartView.xMaxValue = 7
         chartView.animationTime = 2
