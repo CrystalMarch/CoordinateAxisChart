@@ -16,7 +16,7 @@ class ViewController: UIViewController {
             self.init()
             frame = CGRect(x:30,y:40,width:120,height:30)
             setTitle("refresh", for: .normal)
-            addTarget(self, action: #selector(viewController.refreshButonClick), for: .touchUpInside)
+            addTarget(viewController, action: #selector(viewController.refreshButonClick(sender:)), for: .touchUpInside)
             setTitleColor(.gray, for: .normal)
             setTitleColor(.red, for: .highlighted)
             layer.borderWidth = 1
@@ -29,7 +29,7 @@ class ViewController: UIViewController {
             self.init()
             frame = CGRect(x: viewController.view.frame.size.width-150, y: 40, width: 120, height: 30)
             setTitle("clear", for: .normal)
-            addTarget(self, action: #selector(viewController.clearButtonClick), for: .touchUpInside)
+            addTarget(viewController, action: #selector(viewController.clearButtonClick(sender:)), for: .touchUpInside)
             setTitleColor(.gray, for: .normal)
             setTitleColor(.red, for: .highlighted)
             layer.borderWidth = 1
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
             self.init()
             frame = CGRect(x:30,y:80,width: viewController.view.frame.size.width - 60,height:30)
             setTitle("change coordinate axis value", for: .normal)
-            addTarget(self, action: #selector(viewController.changeAxisValueButtonClick), for: .touchUpInside)
+            addTarget(viewController, action: #selector(viewController.changeAxisValueButtonClick(sender:)), for: .touchUpInside)
             setTitleColor(.gray, for: .normal)
             setTitleColor(.red, for: .highlighted)
             layer.borderWidth = 1
@@ -55,14 +55,13 @@ class ViewController: UIViewController {
             self.init()
             frame = CGRect(x:30,y:120,width: viewController.view.frame.size.width - 60,height:30)
             setTitle("change coordinate axis color", for: .normal)
-            addTarget(self, action: #selector(viewController.changeAxisColorButtonClick), for: .touchUpInside)
+            addTarget(viewController, action: #selector(viewController.changeAxisColorButtonClick(sender:)), for: .touchUpInside)
             setTitleColor(.gray, for: .normal)
             setTitleColor(.red, for: .highlighted)
             layer.borderWidth = 1
             layer.borderColor = UIColor.gray.cgColor
         }
     }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
