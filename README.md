@@ -25,7 +25,7 @@ Add to your Podfile:
 Swift:
 ```ruby
 use_frameworks!
-pod 'CoordinateAxisChart', '~> 1.0.0'
+pod 'CoordinateAxisChart', '~> 1.0.1'
 ```
 Note: To use Swift 3.x / master, you need Xcode 8+
 
